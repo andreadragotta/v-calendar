@@ -67,6 +67,7 @@ export default {
               showBorder: !this.isTime,
               isDisabled: (this.isDateTime && !dp.isValid) || this.isDragging,
               validHours: this.validHours,
+              validMinutes: this.validMinutes
             },
             on: { input: p => this.onTimeInput(p, idx === 0) },
           }),
@@ -164,6 +165,7 @@ export default {
     selectAttribute: Object,
     attributes: Array,
     validHours: [Object, Array, Function],
+    validMinutes: [Object, Array, Function]
   },
   data() {
     return {

@@ -306,6 +306,8 @@ export default {
       return this.validHours(hour, this.value);
     },
     minuteIsValid(minute) {
+      console.info(minute);
+      console.info(this.validMinutes);
       if (!this.validMinutes) return true;
       if (isArray(this.validMinutes)) return this.validMinutes.includes(minute);
       if (isObject(this.validMinutes)) {

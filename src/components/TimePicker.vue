@@ -132,6 +132,7 @@ export default {
     showBorder: Boolean,
     isDisabled: Boolean,
     validHours: [Object, Array, Function],
+    validMinutes: [Object, Array, Function]
   },
   data() {
     return {
@@ -183,7 +184,7 @@ export default {
           });
         }
       }
-      return options;
+      return this.filterMinuteOptions(options);
     },
     amDisabled() {
       return !arrayHasItems(this.amHourOptions);
@@ -214,6 +215,9 @@ export default {
       this.updateValue(hours, this.minutes);
     },
     validHours() {
+      this.updateValue();
+    },
+    validMinutes() {
       this.updateValue();
     },
   },
@@ -280,6 +284,17 @@ export default {
       });
       return result;
     },
+    filterMinuteOptions(options) {
+      const result = [];
+      options.forEach(opt => {
+        if (this.minuteIsValid(opt.value)) {
+          result.push({ ...opt });
+        } else if (opt.value === this.minutes) {
+          result.push({ ...opt, disabled: true });
+        }
+      });
+      return result;
+    },
     hourIsValid(hour) {
       if (!this.validHours) return true;
       if (isArray(this.validHours)) return this.validHours.includes(hour);
@@ -290,6 +305,16 @@ export default {
       }
       return this.validHours(hour, this.value);
     },
+    minuteIsValid(minute) {
+      if (!this.validMinutes) return true;
+      if (isArray(this.validMinutes)) return this.validMinutes.includes(minute);
+      if (isObject(this.validMinutes)) {
+        const min = this.validMinutes.min || 0;
+        const max = this.validMinutes.max || 60;
+        return min <= minute && max >= minute;
+      }
+      return this.validMinutes(minute, this.value);
+    }
   },
 };
 </script>

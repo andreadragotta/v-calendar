@@ -71,7 +71,10 @@ export default {
               minHour: this.minHour,
               maxHour: this.maxHour,
             },
-            on: { input: p => this.onTimeInput(p, idx === 0) },
+            on: {
+              input: p => this.onTimeInput(p, idx === 0),
+              changeHour: p => this.$emit('changeHour', p),
+            },
           }),
         ),
         this.$scopedSlots.footer && this.$scopedSlots.footer(),
@@ -169,7 +172,7 @@ export default {
     validHours: [Object, Array, Function],
     validMinutes: [Object, Array, Function],
     minHour: String,
-    maxHour: String
+    maxHour: String,
   },
   data() {
     return {

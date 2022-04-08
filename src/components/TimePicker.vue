@@ -32,7 +32,11 @@
         </span>
       </div>
       <div class="vc-time">
-        <time-select v-model.number="hours" :options="hourOptions" />
+        <time-select
+          v-model.number="hours"
+          @change="$emit('changeHour', hours)"
+          :options="hourOptions"
+        />
         <span style="margin: 0 4px">:</span>
         <time-select v-model.number="minutes" :options="minuteOptions" />
         <div
@@ -305,7 +309,12 @@ export default {
       if (this.minHour && this.maxHour && this.hours) {
         options.forEach(option => {
           const completeHour = `${pad(this.hours, 2)}:${option.label}`;
-          if (Date.parse(`01/01/2011 ${completeHour}`) <= Date.parse(`01/01/2011 ${this.maxHour}`) && Date.parse(`01/01/2011 ${completeHour}`) >= Date.parse(`01/01/2011 ${this.minHour}`)) {
+          if (
+            Date.parse(`01/01/2011 ${completeHour}`) <=
+              Date.parse(`01/01/2011 ${this.maxHour}`) &&
+            Date.parse(`01/01/2011 ${completeHour}`) >=
+              Date.parse(`01/01/2011 ${this.minHour}`)
+          ) {
             result.push({ ...option });
           }
         });
@@ -332,7 +341,7 @@ export default {
         return min <= minute && max >= minute;
       }
       return this.validMinutes(minute, this.value);
-    }
+    },
   },
 };
 </script>
